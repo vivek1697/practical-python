@@ -2,7 +2,7 @@
 #
 # Exercise 1.30
 def portfolio_cost(filename):
-    f = open('Data/portfolio.csv', 'rt')
+    f = open(filename, 'rt')
     headers = next(f).split(',')
     total_sum = 0
     for line in f:
