@@ -1,11 +1,9 @@
 # report.py
 #
-# Exercise 2.7
+# Exercise 2.9
 import csv
 
 def read_portfolio(filename):
-    prices = read_prices('Data/prices.csv')
-        
     portfolio = []
     #Open the csv file and read the data from it 
     with open(filename, 'rt') as f:
@@ -15,22 +13,8 @@ def read_portfolio(filename):
         for row in rows:
             holding = {'name' : row[0], 'shares' : int(row[1]), 'price'  : float(row[2])}
             portfolio.append(holding)
-        #Calculate the total valuation of Portfolio and current_market_value 
-        total_valuation = 0.0
-        actual_market_value = 0.0
-
-        for s in portfolio:
-            total_valuation += s['shares'] * s['price']
-            actual_market_value += s['shares'] * float(prices[s['name']])   
-        #Check if it's loss or gain    
-        if total_valuation > actual_market_value:
-            return print("Loss", total_valuation - actual_market_value)
-        else:
-            return print("Gain", actual_market_value - total_valuation)    
-    
-
-
-
+    return portfolio
+       
 def read_prices(filename):
     prices = {}
     #Open the csv file and read the data from it 
@@ -45,5 +29,16 @@ def read_prices(filename):
        
     return prices
 
+def make_report(portfolio, prices):
+    report = []
+    for row in portfolio:
+        holding = (row['name'], row['shares'], row['price'], round(float(prices[row['name']]) - row['price'],2))
+        report.append(holding)
+    
+    return report    
 
-read_portfolio('Data/portfolio.csv')
+portfolio = read_portfolio('Data/portfolio.csv')
+prices = read_prices('Data/prices.csv')
+report = make_report(portfolio, prices)
+for r in report:
+    print(r)
