@@ -1,6 +1,6 @@
 # report.py
 #
-# Exercise 2.4
+# Exercise 2.5
 import csv
 
 def read_portfolio(filename):
@@ -10,14 +10,15 @@ def read_portfolio(filename):
     with open(filename, 'rt') as f:
         rows = csv.reader(f)
         headers = next(rows)
-        #Run a loop on each row convert it into the tuple and append that into the portfolio list
+        #Run a loop on each row convert it into the dic and append that into the portfolio list
         for row in rows:
-            holding = (row[0], int(row[1]), float(row[2]))
+            holding = {'name' : row[0], 'shares' : int(row[1]), 'price'  : float(row[2])}
             portfolio.append(holding)
         #Calculate the total valuation of Portfolio    
         total = 0.0
         for s in portfolio:
-            total += s[1] * s[2]
+           total += s['shares'] * s['price']
     return print(total)
 
 read_portfolio('Data/portfolio.csv')
+
