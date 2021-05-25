@@ -35,7 +35,7 @@ def read_prices(filename):
 def make_report(portfolio, prices):
     report = []
     for row in portfolio:
-        holding = (row['name'], row['shares'], row['price'], round(float(prices[row['name']]) - row['price'],2))
+        holding = (row['name'], row['shares'], float(prices[row['name']]), round(float(prices[row['name']]) - row['price'],2))
         report.append(holding)
     
     return report    
@@ -49,4 +49,5 @@ headers = ('Name', 'Shares', 'Price', 'Change')
 print('%10s %10s %10s %10s' % headers)
 print((10*'_' + ' ') * len(headers))
 for name, shares, price, change in report:
-    print(f'{name:>10s} {shares:>10d} {price:>10.2f} {change:>10.2f}')
+    new_price = "$" + str(price)
+    print(f'{name:>10s} {shares:>10d} {new_price:>10s} {change:>10.2f}')
