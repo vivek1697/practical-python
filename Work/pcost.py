@@ -1,6 +1,6 @@
 # pcost.py
 #
-# Exercise 1.33
+# Exercise 2.15
 import sys
 import csv
 
@@ -9,11 +9,11 @@ def portfolio_cost(filename):
     rows = csv.reader(f)
     headers = next(rows)
     total_sum = 0
-    for row in rows:
+    for rowno, row in enumerate(rows, start=1):
         try:
-             total_sum = total_sum + float(row[1]) * float(row[2])
+            total_sum = total_sum + float(row[1]) * float(row[2])
         except ValueError:
-            print("Couldn't process the balnk string data")
+            print(f'Row {rowno}: Bad row: {row}')
     return total_sum
 
 if len(sys.argv) == 2:
@@ -21,5 +21,6 @@ if len(sys.argv) == 2:
 else:
     filename = 'Data/portfolio.csv'
 
-cost = portfolio_cost(filename)
+cost = portfolio_cost('Data/missing.csv')
 print('Total cost:', cost)
+
