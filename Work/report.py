@@ -12,7 +12,8 @@ def read_portfolio(filename):
         headers = next(rows)
         #Run a loop on each row convert it into the dic and append that into the portfolio list
         for row in rows:
-            holding = {'name' : row[0], 'shares' : int(row[1]), 'price'  : float(row[2])}
+            record = dict(zip(headers, row))
+            holding = {'name' : record['name'], 'shares' : int(record['shares']), 'price'  : float(record['price'])}
             portfolio.append(holding)
     return portfolio
 
