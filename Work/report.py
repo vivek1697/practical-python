@@ -1,6 +1,6 @@
 # report.py
 #
-# Exercise 2.11
+# Exercise 3.1
 import csv
 
 #Function create a portfolio dic from the file   
@@ -41,14 +41,18 @@ def make_report(portfolio, prices):
     
     return report    
 
+#Function to print the values
+def print_report(report):
+    #Code creates a table view for values
+    headers = ('Name', 'Shares', 'Price', 'Change')
+    print('%10s %10s %10s %10s' % headers)
+    print((10*'_' + ' ') * len(headers))
+    for name, shares, price, change in report:
+        new_price = "$" + str(price)
+        print(f'{name:>10s} {shares:>10d} {new_price:>10s} {change:>10.2f}')
+    return    
+
 portfolio = read_portfolio('Data/portfolio.csv')
 prices = read_prices('Data/prices.csv')
 report = make_report(portfolio, prices)
-
-#Code creates a table view for values
-headers = ('Name', 'Shares', 'Price', 'Change')
-print('%10s %10s %10s %10s' % headers)
-print((10*'_' + ' ') * len(headers))
-for name, shares, price, change in report:
-    new_price = "$" + str(price)
-    print(f'{name:>10s} {shares:>10d} {new_price:>10s} {change:>10.2f}')
+print_report(report) 
