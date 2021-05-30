@@ -1,6 +1,6 @@
 # report.py
 #
-# Exercise 3.1
+# Exercise 3.2
 import csv
 
 #Function create a portfolio dic from the file   
@@ -52,7 +52,17 @@ def print_report(report):
         print(f'{name:>10s} {shares:>10d} {new_price:>10s} {change:>10.2f}')
     return    
 
-portfolio = read_portfolio('Data/portfolio.csv')
-prices = read_prices('Data/prices.csv')
-report = make_report(portfolio, prices)
-print_report(report) 
+#Created new function to handle all the finction call in a single function
+def portfolio_report(portfoliofile, pricefile):
+    #Function to read files from the data and do calculation to create a report  
+    portfolio = read_portfolio(portfoliofile)
+    prices = read_prices(pricefile)
+    
+    #Function call to make report from the data
+    report = make_report(portfolio, prices)
+    
+    #Function call to print the report
+    print_report(report) 
+    
+
+portfolio_report('Data/portfolio.csv', 'Data/prices.csv')
