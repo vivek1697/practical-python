@@ -27,7 +27,7 @@ def parse_csv(filename, select=None):
             if not row:    # Skip rows with no data
                 continue
             # Filter the row if specific columns were selected
-            if indices:
+            if select:
                 row = [ row[index] for index in indices ]
 
             # Make a dictionary
