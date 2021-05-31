@@ -1,10 +1,10 @@
 # fileparse.py
 #
-# Exercise 3.4
+# Exercise 3.6
 
 import csv
 
-def parse_csv(filename, select=None, types=[str, int, float]):
+def parse_csv(filename, select=None, types=None, has_headers=False):
     '''
     Parse a CSV file into a list of records
     '''
@@ -12,7 +12,7 @@ def parse_csv(filename, select=None, types=[str, int, float]):
         rows = csv.reader(f)
 
         # Read the file headers
-        headers = next(rows)
+        headers = next(rows) if has_headers else []
 
         # If a column selector was given, find indices of the specified columns.
         # Also narrow the set of headers used for resulting dictionaries
@@ -30,13 +30,21 @@ def parse_csv(filename, select=None, types=[str, int, float]):
             if select:
                 row = [ row[index] for index in indices ]
 
+            #Check if types are given or not and parse the value according to that
+            
             if types:
                 row = [func(val) for func, val in zip(types, row)]
-                
-            # Make a dictionary
-            record = dict(zip(headers, row))
+            
+            #Check if headers are given or not and calculate according to that    
+            if headers:
+                record = dict(zip(headers, row))
+            else:
+                record = tuple(row)
+            
             records.append(record)
         print(records)
     return records
 
-portfolio = parse_csv('Data/portfolio.csv')
+portfolio = parse_csv('Data/prices.csv', select=None, types=[str,float], has_headers=False)
+
+
