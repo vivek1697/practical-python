@@ -4,7 +4,7 @@
 
 import csv
 
-def parse_csv(filename, select=None, types=None, has_headers=True, delimiter = ','):
+def parse_csv(filename, select=None, types=None, has_headers=True, delimiter = ',', silence_errors=False):
     '''
     Parse a CSV file into a list of records
     '''
@@ -39,8 +39,9 @@ def parse_csv(filename, select=None, types=None, has_headers=True, delimiter = '
                 try:
                     row = [func(val) for func, val in zip(types, row)]
                 except ValueError as e:
-                    print(f"Row {row_index}: Couldn't convert {row}")
-                    print(f"Row {row_index}: Reason {e}")
+                    if not silence_errors:
+                        print(f"Row {row_index}: Couldn't convert {row}")
+                        print(f"Row {row_index}: Reason {e}")
                     continue
             
             #Check if headers are given or not and calculate according to that    
@@ -53,7 +54,7 @@ def parse_csv(filename, select=None, types=None, has_headers=True, delimiter = '
         
     return records
 
-portfolio = parse_csv('Data/missing.csv', types=[str, int, float])
+portfolio = parse_csv('Data/missing.csv', types=[str,int,float], silence_errors=True)
 print(portfolio)
 
 
