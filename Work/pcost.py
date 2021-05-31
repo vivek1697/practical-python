@@ -1,6 +1,6 @@
 # pcost.py
 #
-# Exercise 2.15
+# Exercise 3.16
 import sys
 #import csv
 import report
@@ -14,11 +14,18 @@ def portfolio_cost(filename):
         total_cost += nshares * price
     return total_cost
 
-if len(sys.argv) == 2:
-    filename = sys.argv[1]
-else:
-    filename = 'Data/portfolio.csv'
+def main(argv):
+    if len(sys.argv) != 2:
+        raise SystemExit(f'missing arguments for {sys.argv[0]} ')
+    filename = argv[1]
+        
+    print('Total cost:', portfolio_cost(filename))
 
-cost = portfolio_cost('Data/portfoliodate.csv')
-print('Total cost:', cost)
+if __name__ == '__main__':
+    import sys
+    main(sys.argv)
+   
+
+
+
 

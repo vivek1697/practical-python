@@ -33,17 +33,18 @@ def print_report(report):
         print(f'{name:>10s} {shares:>10d} {new_price:>10s} {change:>10.2f}')
     return    
 
-#Created new function to handle all the finction call in a single function
-def portfolio_report(portfoliofile, pricefile):
-    #Function to read files from the data and do calculation to create a report  
+
+def main(argv):
+    if len(sys.argv) != 3:
+        raise SystemExit(f'missing arguments for {sys.argv[0]} ')
+    portfoliofile = argv[1]
+    pricefile = argv[2]
+        
     portfolio = read_portfolio(portfoliofile)
     prices = read_prices(pricefile)
-    
-    #Function call to make report from the data
     report = make_report(portfolio, prices)
+    print_report(report)
     
-    #Function call to print the report
-    print_report(report) 
-    
-
-portfolio_report('Data/portfolio.csv', 'Data/prices.csv')
+if __name__ == '__main__':
+    import sys
+    main(sys.argv)
