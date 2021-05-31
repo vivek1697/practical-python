@@ -1,10 +1,10 @@
 # fileparse.py
 #
-# Exercise 3.8
+# Exercise 3.9
 
 import csv
 
-def parse_csv(filename, select=None, types=None, has_headers=False, delimiter = ','):
+def parse_csv(filename, select=None, types=None, has_headers=True, delimiter = ','):
     '''
     Parse a CSV file into a list of records
     '''
@@ -26,7 +26,7 @@ def parse_csv(filename, select=None, types=None, has_headers=False, delimiter = 
         
 
         records = []
-        for row in rows:
+        for row_index, row in enumerate(rows, 1):
             if not row:    # Skip rows with no data
                 continue
             # Filter the row if specific columns were selected
@@ -36,7 +36,12 @@ def parse_csv(filename, select=None, types=None, has_headers=False, delimiter = 
             #Check if types are given or not and parse the value according to that
             
             if types:
-                row = [func(val) for func, val in zip(types, row)]
+                try:
+                    row = [func(val) for func, val in zip(types, row)]
+                except ValueError as e:
+                    print(f"Row {row_index}: Couldn't convert {row}")
+                    print(f"Row {row_index}: Reason {e}")
+                    continue
             
             #Check if headers are given or not and calculate according to that    
             if headers:
@@ -45,9 +50,11 @@ def parse_csv(filename, select=None, types=None, has_headers=False, delimiter = 
                 record = tuple(row)
             
             records.append(record)
-        print(records)
+        
     return records
 
-portfolio = parse_csv('Data/prices.csv', select=['name','price'], types=[str,float], has_headers=False, delimiter = ' ')
+portfolio = parse_csv('Data/missing.csv', types=[str, int, float])
+print(portfolio)
+
 
 
