@@ -1,35 +1,16 @@
 # report.py
 #
-# Exercise 3.2
+# Exercise 3.12
 import csv
-
+import fileparse
 #Function create a portfolio dic from the file   
 def read_portfolio(filename):
-    portfolio = []
-    #Open the csv file and read the data from it 
-    with open(filename, 'rt') as f:
-        rows = csv.reader(f)
-        headers = next(rows)
-        #Run a loop on each row convert it into the dic and append that into the portfolio list
-        for row in rows:
-            record = dict(zip(headers, row))
-            holding = {'name' : record['name'], 'shares' : int(record['shares']), 'price'  : float(record['price'])}
-            portfolio.append(holding)
+    portfolio = fileparse.parse_csv(filename, select=['name','shares','price'], types=[str,int,float], has_headers=True)
     return portfolio
 
 #Function create a prices dic from the file       
 def read_prices(filename):
-    prices = {}
-    #Open the csv file and read the data from it 
-    with open(filename, 'rt') as f:
-        rows = csv.reader(f)
-        
-        #Run a loop on each row append into the dic
-        for row in rows:
-            if row != []:
-                k, v = row
-                prices[k] = v
-       
+    prices = dict(fileparse.parse_csv(filename,types=[str,float], has_headers=False))
     return prices
 
 #Function Create a report from Portfolio and Prices
