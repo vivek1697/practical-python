@@ -5,12 +5,14 @@ import csv
 import fileparse
 #Function create a portfolio dic from the file   
 def read_portfolio(filename):
-    portfolio = fileparse.parse_csv(filename, select=['name','shares','price'], types=[str,int,float], has_headers=True)
+    with open(filename) as lines:
+        portfolio = fileparse.parse_csv(lines, select=['name','shares','price'], types=[str,int,float], has_headers=True)
     return portfolio
 
 #Function create a prices dic from the file       
 def read_prices(filename):
-    prices = dict(fileparse.parse_csv(filename,types=[str,float], has_headers=False))
+    with open(filename) as lines:
+        prices = dict(fileparse.parse_csv(lines,types=[str,float], has_headers=False))
     return prices
 
 #Function Create a report from Portfolio and Prices
